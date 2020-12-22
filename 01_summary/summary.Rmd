@@ -1,54 +1,206 @@
 ---
-title: "Tutorial"
-output: learnr::tutorial
+title: "Loading and Summarizing Data"
+output: 
+  learnr::tutorial:
+   progressive: true
 runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(gradethis)
 knitr::opts_chunk$set(echo = FALSE)
+gradethis::gradethis_setup()
+```
+
+## Introduction
+
+In this tutorial, you will load data into R, and Summarize that data. You will use the following R functions: `read.csv`, `url`, `names`, `head`, `summary`, `attach`, `table`, `mean`, `median`, `var`, `sd`, `min`, `max`, `range`, `quantile`, `cor`. 
+
+The following video is provides a nice overview of loading and summarizing data. Watch the whole video, and **do not worry about getting every detail.** This tutorial will walk you through each step.
+
+![](https://youtu.be/ACWuV16tdhY)
+
+## Loading Data
+
+### How to load a data set
+
+![](https://youtu.be/ACWuV16tdhY)
+
+### A closer look at the code
+
+For this tutorial, we will be using a data set that contains information on 78 people using one of three diets. This data is from the University of Sheffield's *Datasets for Teaching*, see https://www.sheffield.ac.uk/mash/statistics/datasets.
+
+To load this data, we will use the `read.csv()` function along with the `url()` function.
+
+```{r LoadData, echo=T}
+diet <- read.csv(url("https://www.sheffield.ac.uk/polopoly_fs/1.886047!/file/Diet_R.csv"))
+
+```
+
+`<-` is the assignment operator. It is used to store something “into” a an object or variable. For now, think of an object as a box, and `<-` puts stuff in the box. So in the code fragment above, we are storing the data into an object called `diet`.
+
+`diet` is a special object called a data frame. You can think of a data frame as one page of an workbook from a spreadsheet program.
+
+We need to use the `url()` function because we are accessing the data file from the internet. If you access data localy, you do not need the `url()` function.
+
+### Now you try
+
+Load the diet data set into a data frame named diet.
+
+```{r  LoadDataEX, exercise=TRUE}
+
+```
+
+```{r  LoadDataEX-solution}
+diet <- read.csv(url("https://www.sheffield.ac.uk/polopoly_fs/1.886047!/file/Diet_R.csv"))
+```
+
+```{r  LoadDataEX-check}
+grade_code("")
+```
+
+## Check the Data
+
+### How to preforem an initial examination of the data set
+
+![](https://youtu.be/U4-RnTW5dfw)
+
+### A closer look at the code
+
+It is always a good idea to look at a data set when you first load it. We need to check that the data loaded as we expected and determine the types and names of the variables in the data set. We can do this with the `head()`, `tail()` and `dim()` functions.
+
+First, let's look at the first few rows of the data frame. We do this with the `head()` function
+
+```{r FirstLookHead, echo=T}
+head(diet)
+```
+
+Next, use the `tail()` function to look at the last few rows of the data frame.
+
+```{r FirstLookTail, echo=T}
+tail(diet)
+```
+
+Next, use the `dim()` function to see how many observation (rows) and variables (columns) the data frame has.
+
+```{r FirstLookDim, echo=T}
+dim(diet)
+```
+
+So we can see that the data set has 78 observation (rows) and 7 variables (columns).
+
+### Now you try
+
+Display the first and last rows of the diet data frame, and then display the dimensions of the diet data frame.
+
+```{r LoadDataSetup, echo=F}
+diet <- read.csv(url("https://www.sheffield.ac.uk/polopoly_fs/1.886047!/file/Diet_R.csv"))
+
+```
+
+```{r  FirstLookEX, exercise=TRUE, exercise.lines=9, exercise.setup = "LoadDataSetup"}
+# First rows of the data frame
+
+
+# Last rows of the data frame
+
+
+# Dimensions of the data frame
+
+
+```
+
+```{r  FirstLookEX-solution}
+# First rows of the data frame
+head(diet)
+
+# Last rows of the data frame
+tail(diet)
+
+# Dimensions of the data frame
+dim(diet)
+```
+
+```{r  FirstLookEX-check}
+grade_code("")
+```
+
+## Frequency Tables
+
+### Summerizing catagorical data with frequiency tables
+
+![](https://www.youtube.com/watch?v=ACWuV16tdhY&t=52s)
+
+### A closer look at the code
+
+A data frame, such as `diet`, contains variables that can be accessed by using a `$`. For example, `diet$Age` returns the observations of the variable Age. Age is a numeric variable, but gender is different. gender is a categorical variable that indicates the biological sex of the subject. 
+
+The `table()` function creates counts of categorical data. For example, gender, takes the value 1 if the subject is male and 0 if the subject is female. The command
+
+```{r, echo=T}
+table(diet$gender)
+```
+
+creates a frequency table of smokers, and
+
+```{r, echo=T}
+table(diet$gender)/length(diet$gender)
+```
+
+creates a proportion table. Note `length()` returns the number of observations in gender. 
+
+Because gender takes the value 1 if the subject is male and 0 if the subject is female, the table produced has column heads of 0 and 1. 
+
+### Now you try
+
+Create a table that count the frequency and proportion of subjects on each diet type by tabulating the variable Diet, i.e. `diet$Diet`. **Warning** R is case sensitive.
+
+```{r TableEX, exercise=TRUE, exercise.lines=6, exercise.setup = "LoadDataSetup"}
+# Frequency Table
+
+
+# Proportion Table
+
+
+```
+
+```{r  TableEX-solution}
+# Frequency Table
+table(diet$Diet)
+
+# Proportion Table
+table(diet$Diet)/length(diet$Diet)
+
+```
+
+```{r  TableEX-check}
+grade_code("")
 ```
 
 
-## Topic 1
+## Contingency Tables
 
-### Exercise  
+![](https://www.youtube.com/watch?v=ACWuV16tdhY&t=111s)
 
-*Here's a simple exercise with an empty code chunk provided for entering the answer.*
+## Summary Statistics
 
-Write the R code required to add two plus two:
 
-```{r two-plus-two, exercise=TRUE}
 
-```
+![](https://www.youtube.com/watch?v=ACWuV16tdhY&t=129s)
 
-### Exercise with Code
+## Correlation
 
-*Here's an exercise with some prepopulated code as well as `exercise.lines = 5` to provide a bit more initial room to work.*
+![](https://www.youtube.com/watch?v=ACWuV16tdhY&t=293s)
 
-Now write a function that adds any two numbers and then call it:
+## Min, Max and Range
 
-```{r add-function, exercise=TRUE, exercise.lines = 5}
-add <- function() {
-  
-}
-```
+## Quantiles
 
-## Topic 2
 
-### Exercise with Hint
 
-*Here's an exercise where the chunk is pre-evaulated via the `exercise.eval` option (so the user can see the default output we'd like them to customize). We also add a "hint" to the correct solution via the chunk immediate below labeled `print-limit-hint`.*
 
-Modify the following code to limit the number of rows printed to 5:
 
-```{r print-limit, exercise=TRUE, exercise.eval=TRUE}
-mtcars
-```
-
-```{r print-limit-hint}
-head(mtcars)
-```
 
 ### Quiz
 
