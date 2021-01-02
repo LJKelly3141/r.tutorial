@@ -29,7 +29,7 @@ The following video is provides a nice overview of loading and summarizing data.
 
 ### A closer look at the code
 
-For this tutorial, we will be using a data set that contains information on 78 people using one of three diets. This data is from the University of Sheffield's *Datasets for Teaching*, see https://www.sheffield.ac.uk/mash/statistics/datasets.
+For this tutorial, we will be using a data set that contains information on 78 people using one of three diets. This data is from the University of Sheffield's *Data Sets for Teaching*, see https://www.sheffield.ac.uk/mash/statistics/datasets.
 
 To load this data, we will use the `read.csv()` function along with the `url()` function.
 
@@ -181,13 +181,73 @@ grade_code("")
 
 ## Contingency Tables
 
+### Cross tabulating more than one variable
+
 ![](https://www.youtube.com/watch?v=ACWuV16tdhY&t=111s)
+
+### A closer look at the code
+
+A cross tabulation between two variables can be calculated by creating a two-way frequency table. A two-way table that cross tabulates Diet by gender can be can be produced with this code.
+
+```{r, echo=T, eval=T}
+table(diet$Diet, diet$gender)
+```
+
+
+### Now you try
+
+Create a table that counts how many males and females are on each diet type.
+
+```{r CrossTableEX, exercise=TRUE, exercise.lines=6, exercise.setup = "LoadDataSetup"}
+
+```
+
+```{r  CrossTableEX-solution}
+table(diet$Diet, diet$gender)
+```
+
+```{r  CrossTableEX-check}
+grade_code("")
+```
 
 ## Summary Statistics
 
-
+### Calculating mean, median and standard deviation 
 
 ![](https://www.youtube.com/watch?v=ACWuV16tdhY&t=129s)
+
+### A closer look at the code
+
+Let's calculate the mean weight loss of all participants. To do so, we need to calculate weight loss by subtracting weight after six weeks from the initial weight. 
+
+```{r, echo=T, eval=T}
+
+diet$weight.loss <- diet$pre.weight - diet$weight6weeks
+
+```
+
+Now calculate the mean weight loss using the `mean()` function.
+
+```{r, echo=T, eval=T}
+
+mean(diet$weight.loss)
+
+```
+
+
+
+Finding the mean by category
+
+```{r, echo=T, eval=T}
+aggregate(x = diet$weight.loss,
+          by = list(diet$gender),
+          FUN = mean)
+```
+
+
+## Now you try
+
+
 
 ## Correlation
 
